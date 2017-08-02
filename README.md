@@ -5,8 +5,8 @@ You are working in IT-recruiting agency "Geek Hunters". Your employer asked you 
 
 Using GRS a recruiting agent should be able to:
   - register a new candidate:
-     first name / last name
-     select technologies candidate has experience in from predefined list 
+     - first name / last name
+     - select technologies candidate has experience in from predefined list 
   - see all candidates
   - filter candidates by technology
 

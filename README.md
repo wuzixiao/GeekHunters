@@ -18,7 +18,8 @@ your needs.
 You are free to use any technology and frameworks you need -
 Console Application / Desktop / Web. However, if you decide to go with third
 party package manager or dev tool - don't forget to mention them in the
-README.md of your fork. And unit tests! We love unit tests!
+README.md of your fork.
 
 Good luck!
 
+P.S: And unit tests! We love unit tests!

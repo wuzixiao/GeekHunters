@@ -21,7 +21,7 @@ You are free to use **ANY** technology and frameworks you need -
 Console Application / Desktop / Web. However, if you decide to go with third
 party package manager or dev tool - don't forget to mention them in the
 README.md of your fork.
-**Try to spend not more than 2-3 hours on this task.** 
+**Try to spend no more than 2-3 hours on this task.** 
 
 Good luck!
 

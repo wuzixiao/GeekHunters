@@ -16,6 +16,7 @@ your needs.
 
 Please fork the project and commit your source code (please do not archive it :) ).
 
+
 You are free to use **ANY** .net web frameworks you need - aspnet / webapi / spa etc. However, if you decide to go with third
 party package manager or dev tool - don't forget to mention them in the
 README.md of your fork.
@@ -23,3 +24,4 @@ README.md of your fork.
 Good luck!
 
 P.S: And unit tests! We love unit tests!
+P.S.S: We are looking for code quality over functional completeness. 

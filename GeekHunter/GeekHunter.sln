@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekHunter.Core", "GeekHunt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekHunter.Infrastructure", "GeekHunter.Infrastructure\GeekHunter.Infrastructure.csproj", "{1B83F447-8765-4FFB-A86B-E53D7E7640CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekHunterTest", "GeekHunterTest\GeekHunterTest.csproj", "{275C764C-9094-445D-8B84-5373630FF5F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1B83F447-8765-4FFB-A86B-E53D7E7640CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B83F447-8765-4FFB-A86B-E53D7E7640CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B83F447-8765-4FFB-A86B-E53D7E7640CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{275C764C-9094-445D-8B84-5373630FF5F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275C764C-9094-445D-8B84-5373630FF5F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275C764C-9094-445D-8B84-5373630FF5F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275C764C-9094-445D-8B84-5373630FF5F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

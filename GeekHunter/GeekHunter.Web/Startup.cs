@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GeekHunter.Infrastructure.Persistance.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +18,12 @@ namespace GeekHunter.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            using (var context = new AppDbContext())
+            {
+                context.Database.EnsureCreated();
+                context.Database.Migrate();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -30,7 +38,7 @@ namespace GeekHunter.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddEntityFrameworkSqlite().AddDbContext<AppDbContext>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

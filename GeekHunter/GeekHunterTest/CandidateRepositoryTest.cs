@@ -16,6 +16,29 @@ namespace GeekHunterTest
         private readonly  DbContextOptions<AppDbContext> _options = new DbContextOptionsBuilder<AppDbContext>()
                             .UseSqlite(@"Data Source=./GeekHunter.sqlite;")
                             .Options;
+        private void SetupSkills(AppDbContext context)
+        {
+            var skill = new Skill
+            {
+                Name = "Leadership"
+            };
+            var skill2 = new Skill
+            {
+                Name = "Public Speech"
+            };
+
+            var skill3 = new Skill
+            {
+                Name = "Distributed System"
+            };
+            var skill4 = new Skill
+            {
+                Name = "Algorithm"
+            };
+
+            context.AddRange(skill, skill2, skill3, skill4);
+            context.SaveChanges();
+        }
 
         [Fact] 
         public async Task SetUp_Database_Success()
@@ -26,10 +49,8 @@ namespace GeekHunterTest
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 var repo = new CandidateRepository(context);
-
                 //Act
                 var actual = await repo.CandidateCount();
-
                 //Assert
                 Assert.Equal(0, actual);
                 context.Database.EnsureDeleted();
@@ -37,44 +58,80 @@ namespace GeekHunterTest
         }
 
         [Fact]
-        public async Task Get_Canditates_By_Skill()
+        public async Task Find_Canditates_By_LastName()
         {
             //Arrange
             using (var context = new AppDbContext(_options))
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+                SetupSkills(context);
+
                 var repo = new CandidateRepository(context);
                 var candidate = new Candidate
                 {
                     FirstName = "Tom",
                     LastName = "Liu",
                 };
-                var skill = new Skill
-                {
-                    Name = "Leadership"
-                };
-                var skill2 = new Skill
-                {
-                    Name = "Public Speech"
-                };
 
-                candidate.CandidateSkills = new List<CandidateSkill>
-                {
-                    new CandidateSkill {
-                        Candidate = candidate,
-                        Skill = skill
-                    },
-                    new CandidateSkill {
-                        Candidate = candidate,
-                        Skill = skill2
-                    },
-
-                };
-                await repo.SaveCandidateAsync(candidate);
+                await repo.SaveCandidateAsync(candidate, new List<int> { 1, 3, 4 });
 
                 //Act
-                var actual = await repo.GetCandidatesBySkillsAsync(new List<string> { "Leadership", "Public Speech" });
+                var actual = await repo.GetCandidatesByNameAsync("liu");
+
+                //Assert
+                Assert.Single(actual);
+                context.Database.EnsureDeleted();
+            }
+        }
+        [Fact]
+        public async Task Find_Canditates_By_FirstName()
+        {
+            //Arrange
+            using (var context = new AppDbContext(_options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                SetupSkills(context);
+
+                var repo = new CandidateRepository(context);
+                var candidate = new Candidate
+                {
+                    FirstName = "Tom",
+                    LastName = "Liu",
+                };
+
+                await repo.SaveCandidateAsync(candidate, new List<int> { 1, 3, 4 });
+
+                //Act
+                var actual = await repo.GetCandidatesByNameAsync("tom");
+
+                //Assert
+                Assert.Single(actual);
+                context.Database.EnsureDeleted();
+            }
+        }
+        [Fact]
+        public async Task Find_Canditates_By_Skill()
+        {
+            //Arrange
+            using (var context = new AppDbContext(_options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                SetupSkills(context);
+
+                var repo = new CandidateRepository(context);
+                var candidate = new Candidate
+                {
+                    FirstName = "Tom",
+                    LastName = "Liu",
+                };
+
+                await repo.SaveCandidateAsync(candidate, new List<int> { 1, 3, 4 });
+
+                //Act
+                var actual = await repo.GetCandidatesBySkillsAsync("api");
 
                 //Assert
                 Assert.Single(actual);
@@ -89,25 +146,17 @@ namespace GeekHunterTest
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+                SetupSkills(context);
+
                 var repo = new CandidateRepository(context);
                 var candidate = new Candidate
                 {
                     FirstName = "Tom",
                     LastName = "Liu",
                 };
-                var skill = new Skill
-                {
-                    Name = "Leadership"
-                };
-                candidate.CandidateSkills = new List<CandidateSkill>
-                {
-                    new CandidateSkill {
-                        Candidate = candidate,
-                        Skill = skill
-                    }
-                };
+                var skillIds = new List<int> { 1, 3 };
                 //Act
-                await repo.SaveCandidateAsync(candidate);
+                await repo.SaveCandidateAsync(candidate, skillIds);
                 var actual = repo.CandidateCount();
 
                 //Assert

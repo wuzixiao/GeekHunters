@@ -17,9 +17,14 @@ namespace GeekHunter.Core.Services
             _repo = repo;
         }
 
-        public Task<IEnumerable<Candidate>> FindCandidatesBySkills(FindCandidatesRequest request)
+        public async Task<IEnumerable<Candidate>> FindCandidatesByNameAsync(string filter)
         {
-            throw new NotImplementedException();
+            return await _repo.GetCandidatesByNameAsync(filter);
+        }
+
+        public async Task<IEnumerable<Candidate>> FindCandidatesBySkillsAsync(string skill)
+        {
+            return await _repo.GetCandidatesBySkillsAsync(skill);
         }
 
         public async Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
@@ -27,9 +32,9 @@ namespace GeekHunter.Core.Services
             return await _repo.GetCandidatesBySkillsAsync(null);
         }
 
-        public Task SaveCandidate(Candidate candidate)
+        public async Task SaveCandidateAsync(Candidate candidate, IEnumerable<int> skillIds)
         {
-            throw new NotImplementedException();
+            await _repo.SaveCandidateAsync(candidate, skillIds);
         }
     }
 }

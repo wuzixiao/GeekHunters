@@ -1,0 +1,54 @@
+﻿@model List<GeekHunter.Core.Entities.Candidate>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Search</h1>
+    </div>
+
+    <form asp-action="Search" method="get">
+        <div>
+            <p>
+                Skill: <input type="text" name="skill">
+                <input type="submit" value="Filter" />
+            </p>
+        </div>
+    </form>
+    <form asp-action="Search" method="get">
+        <div>
+            <p>
+                Name: <input type="text" name="name">
+                <input type="submit" value="Filter" />
+            </p>
+        </div>
+    </form>
+
+    <table width="100%">
+        <thead>
+            <tr>
+                <th width="20%">Candidate Name</th>
+                <th width="80%">Skills</th>
+            </tr>
+        </thead>
+        <tbody class="table-hover">
+            @foreach (var candidate in Model)
+            {
+            <tr>
+                <td>@candidate.FirstName @candidate.LastName</td>
+                <td>
+                    <ul>
+                        @foreach (var skill in candidate.CandidateSkills.Select(s => s.Skill))
+                        {
+                        <li>@skill.Name</li>
+                        }
+                    </ul>
+                    <hr />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>

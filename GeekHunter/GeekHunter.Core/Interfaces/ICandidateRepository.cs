@@ -8,8 +8,9 @@ namespace GeekHunter.Core.Interfaces
 {
     public interface ICandidateRepository
     {
-        Task SaveCandidateAsync(Candidate candidate);
-        Task<IEnumerable<Candidate>> GetCandidatesBySkillsAsync(IEnumerable<string> skills);
+        Task SaveCandidateAsync(Candidate candidate, IEnumerable<int> Ids);
+        Task<IEnumerable<Candidate>> GetCandidatesBySkillsAsync(string filter);
         Task<int> CandidateCount();
+        Task<IEnumerable<Candidate>> GetCandidatesByNameAsync(string filter);
     }
 }

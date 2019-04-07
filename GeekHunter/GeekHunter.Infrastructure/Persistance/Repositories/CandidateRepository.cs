@@ -10,19 +10,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GeekHunter.Infrastructure.Persistance.Repositories
 {
-    public class CandidateRepository : BaseRepository,ICandidateRepository
+    public class CandidateRepository : BaseRepository, ICandidateRepository
     {
         public CandidateRepository(AppDbContext context) : base(context)
         {
         }
 
-        public async Task<IEnumerable<Candidate>> GetCandidatesBySkillsAsync(IEnumerable<string> skills)
+        public async Task<IEnumerable<Candidate>> GetCandidatesByNameAsync(string filter)
         {
-            if(skills == null || !skills.Any())
+            if(String.IsNullOrEmpty(filter))
             {
-                return await _context.Candidates.ToListAsync();
+                return await _context.Candidates
+                    .Include(cs => cs.CandidateSkills)
+                    .ThenInclude(cs => cs.Skill)
+                    .ToListAsync();
             }
-            return await _context.Candidates.Where(c => c.CandidateSkills.Any(cs => skills.Contains(cs.Skill.Name))).ToListAsync();
+            return await _context.Candidates
+                .Where(c => c.CandidateSkills.Any(cs => cs.Candidate.FirstName.Equals(filter, StringComparison.CurrentCultureIgnoreCase) 
+                                                        || cs.Candidate.LastName.Equals(filter, StringComparison.CurrentCultureIgnoreCase)))
+                .Include(cs => cs.CandidateSkills)
+                .ThenInclude(cs => cs.Skill)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Candidate>> GetCandidatesBySkillsAsync(string filter)
+        {
+            if(String.IsNullOrEmpty(filter))
+            {
+                return await _context.Candidates
+                    .Include(cs => cs.CandidateSkills)
+                    .ThenInclude(cs => cs.Skill)
+                    .ToListAsync();
+            }
+            return await _context.Candidates
+                .Where(c => c.CandidateSkills.Any(cs => cs.Skill.Name.Equals(filter, StringComparison.CurrentCultureIgnoreCase)))
+                .Include(cs => cs.CandidateSkills)
+                .ThenInclude(cs => cs.Skill)
+                .ToListAsync();
         }
 
         public async Task<int> CandidateCount()
@@ -30,9 +54,16 @@ namespace GeekHunter.Infrastructure.Persistance.Repositories
             return await _context.Candidates.CountAsync();
         }
 
-        public async Task SaveCandidateAsync(Candidate candidate)
+        public async Task SaveCandidateAsync(Candidate candidate, IEnumerable<int> skillIds)
         {
+            candidate.CandidateSkills = skillIds.Select(id => new CandidateSkill
+            {
+                Candidate = candidate,
+                Skill = _context.Skills.Single(s => s.Id == id)
+            }).ToList();
+
             await _context.Candidates.AddAsync(candidate);
+
             await _context.SaveChangesAsync();
         }
     }

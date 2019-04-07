@@ -1,0 +1,40 @@
+﻿@model GeekHunter.Web.Models.NewCandidateViewModel
+@{
+    ViewData["Title"] = "New";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Add a new candidate</h1>
+</div>
+
+<div class="form-style-5">
+    @using (Html.BeginForm("Save", "Candidates"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FirstName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName)
+        </div>
+
+        <div>
+            <input type="hidden" id="textBoxVal">
+            <select class="form-control"  asp-for="SkillIds" multiple style="width: 100%">
+                @foreach (var skill in ViewBag.Skills)
+                {
+                    <option value="@skill.Id">@skill.Name</option>
+                }
+            </select>
+            @Html.ValidationMessageFor(m => m.SkillIds)
+        </div>
+
+        <br />
+        <button type="submit">Save</button>
+    }
+</div>

@@ -6,6 +6,6 @@ namespace GeekHunter.Core.Interfaces.Communicate
 {
     public class FindCandidatesRequest
     {
-        public IEnumerable<string> SkillName { get; set; }
+        public IEnumerable<string> SkillNames { get; set; }
     }
 }

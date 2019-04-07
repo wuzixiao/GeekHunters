@@ -44,5 +44,23 @@ namespace GeekHunterTest
             //Assert
             Assert.Equal(candidates, ret);
         }
+
+        [Fact]
+        public void Find_Candidates_Return_Null()
+        {
+            //add later
+        }
+
+        [Fact]
+        public void Find_Candidates_Return_NonEmpty()
+        {
+            //add later
+        }
+
+        [Fact]
+        public void Save_Candidates_Success()
+        {
+            //add later
+        }
     }
 }

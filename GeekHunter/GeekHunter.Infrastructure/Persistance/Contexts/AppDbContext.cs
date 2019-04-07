@@ -59,42 +59,24 @@ namespace GeekHunter.Infrastructure.Persistance.Contexts
                 .WithMany(s => s.CandidateSkills)
                 .HasForeignKey(cs => cs.SkillId);
 
-            //var candidate = new Candidate
-            //{
-            //    FirstName = "firstName",
-            //    LastName = "lastName",
-            //    Id = 1
-            //};
-
-            //var skill = new Skill
-            //{
-            //    Name = "Leadership",
-            //    Id = 1
-            //};
-
-            //var css = new CandidateSkill
-            //{
-            //    SkillId = 1,
-            //    Skill = skill,
-            //    Candidate = candidate,
-            //    CandidateId = 1,
-            //};
-
-            //modelBuilder.Entity<Skill>().HasData(skill);
-            //modelBuilder.Entity<Candidate>().HasData(candidate);
-            //modelBuilder.Entity<CandidateSkill>().HasData(css);
-
             //Add some Skills
-            //modelBuilder.Entity<Skill>().HasData(
-            //    new Skill
-            //    {
-            //        Name = "API"
-            //    },
-            //    new Skill
-            //    {
-            //        Name = "Leadership"
-            //    }
-            //);
+            modelBuilder.Entity<Skill>().HasData(
+                new Skill
+                {
+                    Id = 1,
+                    Name = "API"
+                },
+                new Skill
+                {
+                    Id = 2,
+                    Name = "Leadership"
+                },
+                new Skill
+                {
+                    Id = 3,
+                    Name = "Public Speech"
+                }
+            );
         }
 
     }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GeekHunter.Core.Interfaces
 {
-    public interface ISkillService
+    public interface ISkillRepository
     {
-        Task<IEnumerable<Skill>> LoadSkillsAsync();
+        Task<IEnumerable<Skill>> GetAllSkilllsAsync();
     }
 }
